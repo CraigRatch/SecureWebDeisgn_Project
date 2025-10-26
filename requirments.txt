@@ -1,0 +1,16 @@
+# Flask Framework
+click
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+
+# Flask Packages
+Flask-Login
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+Flask-WTF
+Flask-Bcrypt
+
