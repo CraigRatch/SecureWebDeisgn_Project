@@ -1,0 +1,192 @@
+
+/* General Page Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eaf4e0;  /* Soft green background */
+    color: #2c5e1a;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    text-align: center;
+}
+
+
+/* Heading Styles */
+h1 {
+    font-size: 1cm;
+    color: #1f4d00; /* Dark green color */
+    background-color: #a1d09e; /* Light green background */
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px; /* Space between heading and buttons */
+    width: 80%;
+    max-width: 1500px;
+    font-weight: bold;
+    letter-spacing: 1px; /* Add letter spacing */
+}
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 80px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Button styles */
+button {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: relative;
+    top: -50px;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(72, 155, 73, 0.7);
+}
+
+/* Back link */
+.back-link {
+    font-size: 16px;
+    color: #3498DB;
+    text-decoration: none;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Flash messages */
+.flash-messages {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.flash {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.flash.warning {
+    background-color: #ffeb99;
+    color: #a67c00;
+    border: 1px solid #a67c00;
+}
+
+.success {
+    background-color: #B1E7A0;
+}
+
+.error {
+    background-color: #B46B3D;
+}
+
+/* Form styling */
+form {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -10px;
+}
+
+form input[type="number"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+form input[type="number"]:focus,
+form input[type="password"]:focus {
+    border-color: #4CAF50;
+    background-color: #f1f1f1;
+    outline: none;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    form {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}

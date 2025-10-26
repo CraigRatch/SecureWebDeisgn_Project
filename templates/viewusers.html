@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/viewusersCSS.css') }}">
+
+</head>
+<body>
+    <h1>Users List</h1>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+    {% if users %}
+        <table>
+            <tr>
+                <th>Army Number</th>
+                <th>Rank</th>
+                <th>Surname</th>
+                <th>Role</th>
+                <th>Contact</th>
+                <th>BIO</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td>{{ user[4] }}</td>
+                    <td>{{ user[5] }}</td>
+                    <td>{{ user[6] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+
+    <a href="{{ url_for('profile') }}" class="back-button">← Back to homepage</a>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/viewtasks.css') }}">
+</head>
+<body>
+    <h1>Task List</h1>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+    {% if tasks %}
+        <table border="1">
+            <tr>
+                <th>Task No</th>
+                <th>Description</th>
+                <th>Equipment</th>
+                <th>Personnel</th>
+                <th>Created By</th>
+            </tr>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task[0] }}</td>  <!-- Task No -->
+                    <td>{{ task[1] }}</td>  <!-- Description -->
+                    <td>{{ task[2] }}</td>  <!-- Equipment -->
+                    <td>{{ task[3] }}</td>  <!-- Personnel -->
+                    <td>{{ task[4] }}</td>  <!-- Created By -->
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No tasks found.</p>
+    {% endif %}
+
+    <a href="{{ url_for('assignment') }}" class="back-button">← Back to Assignments</a>
+
+</body>
+</html>

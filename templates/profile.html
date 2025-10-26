@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profileCSS.css') }}">
+
+    <script>
+        function showUserInfo() {
+            var userInfoDiv = document.getElementById('user-info');
+            userInfoDiv.style.display = (userInfoDiv.style.display === 'none') ? 'block' : 'none';
+        }
+
+        function enableEdit(fieldId) {
+            document.getElementById(fieldId).style.display = 'none';
+            document.getElementById('edit-' + fieldId).style.display = 'block';
+        }
+
+        function toggleCreateUserForm() {
+            var createUserForm = document.getElementById('create-user-form');
+            createUserForm.style.display = (createUserForm.style.display === 'none') ? 'block' : 'none';
+        }
+
+        function enterUserData() {
+            var armyNumberField = document.getElementById('army-number-field');
+            armyNumberField.style.display = (armyNumberField.style.display === 'none' || armyNumberField.style.display === '') ? 'block' : 'none';
+        }
+
+        function togglePasswordForm() {
+            var passwordForm = document.getElementById('password-form');
+            passwordForm.style.display = (passwordForm.style.display === 'none' || passwordForm.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<h1>User Profile</h1>
+
+<!-- Display Army Number -->
+<p><strong>Current User:</strong> {{ session['armyNo'] }} <strong>Role: {{ session['role'] }}</strong></p>
+
+<!-- Button container for aligning buttons -->
+<div class="button-container">
+    <button onclick="showUserInfo()">Show User Info</button>
+    {% if session['role'] == 'Admin' %}
+        <button onclick="toggleCreateUserForm()">Create New User</button>
+        <button onclick="window.location.href='{{ url_for('view_users') }}'">View Users</button>
+    {% endif %}
+</div>
+
+<!-- User Information -->
+<form action="{{ url_for('profile') }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+{% if userInfo %}
+    <div id="user-info">
+        {% for field in ['Rank', 'Surname', 'Role', 'Contact', 'BIO'] %}
+            <p>
+                <strong>{{ field }}:</strong>
+                <span id="{{ field.lower() }}">{{ userInfo[field] }}</span>
+
+                {% if session['role'] in ['Admin', 'Officer'] or (session['role'] == 'Admin' and field == 'BIO') %}
+                    <input type="text" id="edit-{{ field.lower() }}" name="{{ field.lower() }}" class="editable-field" value="{{ userInfo[field] }}">
+                    <button type="button" onclick="enableEdit('{{ field.lower() }}')">Change Info</button>
+                {% endif %}
+            </p>
+        {% endfor %}
+        {% if session['role'] == 'Admin' %}
+            <button type="submit">Update Info</button>
+        {% endif %}
+
+    </div>
+{% else %}
+    <p>No user information available.</p>
+{% endif %}
+
+
+</form>
+
+<!-- Change Password Section -->
+<h3>
+    <button type="button" onclick="togglePasswordForm()">Change Password</button>
+</h3>
+
+<!-- Hidden by default -->
+<form id="password-form" action="{{ url_for('change_password') }}" method="POST" style="display: none;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <label for="current-password">Current Password:</label>
+    <input type="password" id="current-password" name="current_password" required><br><br>
+
+    <label for="new-password">New Password:</label>
+    <input type="password" id="new-password" name="new_password" required minlength="10"
+           pattern="^(?=.*[a-z])(?=.*[A-Z]).{10,}$"
+           title="Password must be at least 10 characters long, and include both upper and lowercase letters.">
+    <br><br>
+
+    <label for="confirm-password">Confirm New Password:</label>
+    <input type="password" id="confirm-password" name="confirm_password" required><br><br>
+
+    <button type="submit">Update Password</button>
+</form>
+
+
+<!-- Delete User Form (Only for Admin) -->
+{% if session['role'] == 'Admin' %}
+<form action="{{ url_for('profile') }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+    <button type="button" onclick="enterUserData()">Delete User</button>
+
+    <div id="army-number-field" style="display: none;">
+        <label for="armyN">Army Number:</label>
+        <input type="text" id="armyN" name="armyN" placeholder="Enter Army Number to Delete" required>
+        <button type="submit" name="action" value="delete_user">Confirm Deletion</button>
+    </div>
+</form>
+{% endif %}
+
+<!-- Create New User Form (Hidden by default) -->
+{% if session['role'] == 'Admin' %}
+    <div id="create-user-form" style="display:none;">
+        <h2>Create New User</h2>
+        <form action="{{ url_for('create_user') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+            <label for="armyNo">Army Number:</label>
+            <input type="text" id="armyNo" name="armyNo" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password"
+                   id="password"
+                   name="password"
+                   required minlength="10"
+                   pattern="^(?=.*[a-z])(?=.*[A-Z]).{10,}$"
+                   title="Password must be at least 10 characters long, and include both upper and lowercase letters.">
+            <br><br>
+
+            <label for="rank">Rank:</label>
+            <input type="text" id="rank" name="rank" required><br><br>
+
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" required><br><br>
+
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role" required><br><br>
+
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" required><br><br>
+
+            <label for="bio">Bio:</label>
+            <input type="text" id="bio" name="bio"><br><br>
+
+            <button type="submit">Create User</button>
+        </form>
+    </div>
+{% endif %}
+
+<!-- Back to Homepage Link -->
+<a href="{{ url_for('homepage') }}" class="back-button">← Back to homepage</a>
+
+</body>
+</html>

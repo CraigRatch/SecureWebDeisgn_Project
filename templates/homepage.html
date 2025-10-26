@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homeCSS.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Defence Forces Personal Management System</h1>
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message|safe }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Form for actions -->
+    <form action="/homepageAction" method="post">
+        <!-- CSRF Token for Security -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <!-- Pass armyNo as a hidden field -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+
+        <!-- Buttons for different actions -->
+        <button type="submit" name="action" value="view_profile">View Profile</button>
+        <button type="submit" name="action" value="assignment">Assignment</button>
+        <button type="submit" name="action" value="equipment">Equipment</button>
+        {% if session['role'] == 'Officer' or session['role'] == 'Admin' %}
+            <button type="submit" name="action" value="history">Access History</button>
+        {% endif %}
+
+    </form>
+
+    <!-- Logout Button -->
+    <form action="/logout" method="post">
+        <!-- CSRF Token for Security -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">Logout</button>
+    </form>
+
+</body>
+</html>

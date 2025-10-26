@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Link to the CSS file in the static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/userStyle.css') }}">
+    <!-- Add reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+    <img src="{{ url_for('static', filename='images/emblem.png') }}" alt="Defence Forces Home" class="background-image">
+
+    <h1><strong>Welcome to the Defence Forces Personnel Management System</strong></h1>
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message|safe }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Login Form -->
+    <form action="/userinput" method="post">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+        <div class="user_input">
+            <!-- Army Number Input -->
+            Army No: <input type="number" id="armyno" name="armyno" required><br>
+
+            <!-- Password Input -->
+            PASSWORD: <input type="password" id="password" name="password" required><br>
+
+            <!-- Forgot Password Link -->
+            <a href="{{ url_for('forgot_password') }}">Forgot Password?</a><br>
+
+            <!-- CAPTCHA Backend with public key  -->
+            <div class="g-recaptcha" data-sitekey="6LcooP0qAAAAACdJVnCxVcnqBS09qqa5VHCZhGaA"></div>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Login">
+        </div>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/equip.css') }}">
+
+    <script>
+        function toggleForm(formId) {
+            const formDiv = document.getElementById(formId);
+            if (formDiv.style.display === 'none' || formDiv.style.display === '') {
+                formDiv.style.display = 'block';
+            } else {
+                formDiv.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Defence Forces Equipment</h1><br>
+    <p><strong>User: </strong> {{ session['armyNo'] }} <strong>Role:</strong> {{ session['role'] }}</p>
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Main Form for Enter Stock & View Stock -->
+    <form action="/EquipmentAction" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+
+        <div class="button-container">
+            {% if session['role'] == 'Admin' or session['role'] == 'Officer' %}
+                <button type="button" onclick="toggleForm('enterStockDiv')">Enter new Stock</button>
+            {% endif %}
+
+            {% if session['role'] == 'Admin' or session['role'] == 'Officer' %}
+                <button type="button" onclick="toggleForm('updateStock')">Update Stock</button>
+            {% endif %}
+
+            <button type="submit" name="action" value="view_stock">View Stock</button>
+
+            {% if session['role'] == 'Admin' or session['role'] == 'Officer' %}
+                <button type="button" onclick="toggleForm('serialInputDiv')">Place Order</button>
+            {% endif %}
+
+            {% if session['role'] == 'Admin' or session['role'] == 'Officer' %}
+                <button type="button" onclick="toggleForm('deleteStock')">Delete Stock</button>
+            {% endif %}
+        </div>
+
+    </form>
+    <form action="{{ url_for('deleteStockAction') }}" method="POST" id="deleteStock" style="display: none; margin-top: 10px;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+        <h3><i>Please enter details to delete stock</i></h3>
+        <label for="serialN"><strong>Serial Number:</strong></label>
+        <input type="text" id="serialN" name="serialN" required><br><br>
+
+        <label for="name"><strong>Item:</strong></label>
+        <input type="text" id="name" name="stock" required><br><br>
+
+        <button type="submit">delete Stock</button>
+
+
+    </form>
+
+
+    <form action="{{ url_for('updateStockAction') }}" method="POST" id="updateStock" style="display: none; margin-top: 10px;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+        <h3><i>Please enter details for updated stock</i></h3>
+
+        <label for="serialNum"><strong>Serial Number:</strong></label>
+        <input type="text" id="serialNum" name="serialNum" required><br><br>
+
+        <label for="stock"><strong>Item:</strong></label>
+        <input type="text" id="stock" name="stock" required><br><br>
+
+        <label for="service"><strong>Serviceability:</strong></label>
+        <input type="text" id="service" name="service" required><br><br>
+
+        <label for="totalQuantity"><strong>Total Quantity:</strong></label>
+        <input type="text" id="totalQuan" name="totalQuantity" required><br><br>
+
+        <label for="comments"><strong>Comments:</strong></label>
+        <input type="text" id="comments" name="comment" required><br><br>
+
+        <button type="submit">Enter Stock</button>
+
+    </form>
+
+    <!-- Form for Enter Stock (Initially Hidden) -->
+    <form action="{{ url_for('stockAction') }}" method="POST" id="enterStockDiv" style="display: none; margin-top: 10px;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+        <h3><i>Please enter details of new stock</i></h3>
+
+        <label for="serialNo"><strong>Serial Number:</strong></label>
+        <input type="text" id="serialNo" name="serialNo" required><br><br>
+
+        <label for="Item"><strong>Item:</strong></label>
+        <input type="text" id="Item" name="item" required><br><br>
+
+        <label for="serviceability"><strong>Serviceability:</strong></label>
+        <input type="text" id="serviceability" name="serviceability" required><br><br>
+
+        <label for="totalQuantity"><strong>Total Quantity:</strong></label>
+        <input type="text" id="totalQuantity" name="totalQuantity" required><br><br>
+
+        <label for="availability"><strong>Availability:</strong></label>
+        <input type="text" id="availability" name="availability" required><br><br>
+
+        <label for="comment"><strong>Comments:</strong></label>
+        <input type="text" id="comment" name="comment" required><br><br>
+
+        <button type="submit">Enter Stock</button>
+    </form>
+
+    <!-- Form for Place Order (Initially Hidden) -->
+    <form action="/EquipmentAction" method="post" id="serialInputDiv" style="display: none; margin-top: 10px;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+         <h3><i>Please enter details of stock order</i></h3>
+
+        <label for="serialNumber"><strong>Serial Number:</strong></label>
+        <input type="text" id="serialNumber" name="serial_number" required><br><br>
+
+        <label for="stockName"><strong>Stock Name:</strong></label>
+        <input type="text" id="stockName" name="stock_name" required><br><br>
+
+        <label for="quantity"><strong>Quantity:</strong></label>
+        <input type="text" id="quantity" name="quantity" required><br><br>
+
+        <label for="reason"><strong>Reason for Order:</strong></label>
+        <input type="text" id="reason" name="reason" required><br><br>
+
+        <button type="submit" name="action" value="commit">Commit</button>
+        <button type="submit" name="action" value="view_order">View Order</button>
+
+    </form>
+
+    <!-- Back to Homepage Link -->
+``  <a href="{{ url_for('homepage') }}" class="back-button">← Back to homepage</a>
+</body>
+</html>

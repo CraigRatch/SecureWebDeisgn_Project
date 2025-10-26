@@ -1,0 +1,273 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eaf4e0;
+    color: #2c5e1a;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1cm;
+    color: #1f4d00;
+    background-color: #a1d09e;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 1500px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+/* Buttons */
+button {
+    background-color: #3c8031;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #2c5e1a;
+    transform: translateY(-2px);
+}
+
+/* User Information Section */
+#user-info {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    width: 50%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    border: 2px solid #3c8031;
+}
+
+/* User Info Fields */
+#user-info p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    margin: 10px 0;
+    padding: 6px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Field Labels */
+#user-info strong {
+    flex: 1;
+    font-weight: bold;
+    color: #1f4d00;
+}
+
+/* Field Values */
+#user-info span {
+    flex: 2;
+    text-align: right;
+}
+
+/* Editable Fields */
+.editable-field {
+    display: none;
+    width: 60%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Align Change Info Buttons */
+#user-info button {
+    margin-left: 10px;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+/* Create User Form */
+#create-user-form {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    width: 40%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    border: 2px solid #3c8031;
+}
+
+/* Labels and Inputs */
+label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border 0.3s ease;
+}
+
+/* Input Focus Effect */
+input:focus, select:focus {
+    outline: none;
+    border-color: #2c5e1a;
+    box-shadow: 0px 0px 5px rgba(60, 128, 49, 0.4);
+}
+
+/* Password Form */
+#password-form {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    width: 40%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #3c8031;
+}
+
+/* Password Input Fields */
+#password-form input {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Form Buttons */
+#create-user-form button, #password-form button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Delete User Section */
+#army-number-field {
+    display: none;
+    background: white;
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #c0392b;
+}
+
+#army-number-field input {
+    width: 80%;
+    padding: 6px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#army-number-field button {
+    background-color: #c0392b;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#army-number-field button:hover {
+    background-color: #a52a2a;
+}
+
+/* Flash Messages */
+.flash-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    max-width: 400px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
+    animation: fadeOut 5s ease-in-out forwards;
+    opacity: 0.95;
+}
+
+/* Flash Message Colors */
+.success {
+    background-color: rgb(177, 231, 160);
+}
+
+.error {
+    background-color: rgb(180, 107, 61);
+}
+
+/* Links */
+a {
+    display: block;
+    margin-top: 20px;
+    color: #3c8031;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #1f4d00;
+}
+
+/* Keyframe for Flash Messages */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+/* Add spacing between Change Password and Delete User sections */
+#password-form {
+    margin-bottom: 30px; /* Increased spacing */
+}
+
+#army-number-field {
+    margin-top: 30px; /* Increased spacing */
+}

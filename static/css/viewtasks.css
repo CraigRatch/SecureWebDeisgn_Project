@@ -1,0 +1,104 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eaf4e0; /* Matches the previous theme */
+    color: #2c5e1a;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+
+/* Heading Styles */
+h1 {
+    font-size: 1cm;
+    color: #1f4d00; /* Dark green color */
+    background-color: #a1d09e; /* Light green background */
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px; /* Space between heading and buttons */
+    width: 100%;
+    max-width: 1500px;
+    font-weight: bold;
+    letter-spacing: 1px; /* Add letter spacing */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Headers */
+th {
+    background-color: #3c8031; /* Matches button color */
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center; /* Center align header text */
+}
+
+/* Table Rows */
+td {
+    padding: 12px;
+    text-align: center; /* Center align all table data */
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle; /* Ensures text is centered vertically */
+}
+
+button {
+    flex: 1;
+    padding: 14px 20px; /* Keeps size consistent */
+    background-color: #3c8031;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+    text-align: center;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Flash Messages */
+.flash-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    max-width: 400px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    animation: fadeOut 5s ease-in-out forwards;
+}
+
+.success {
+    background-color: rgb(177, 231, 160);
+}
+
+.error {
+    background-color: rgb(180, 107, 61);
+}
+
+/* CSS Animation for fading messages */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}

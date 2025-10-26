@@ -1,0 +1,131 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body{
+    font-family: Arial, sans-serif;
+    background-color: #eaf4e0; /* Soft green for a clean look */
+    color: #2c5e1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Push elements apart */
+    min-height: 100vh; /* Changed from height to min-height for better responsiveness */
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Heading Styles */
+h1 {
+    font-size: 1cm;
+    color: #1f4d00; /* Dark green color */
+    background-color: #a1d09e; /* Light green background */
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px; /* Space between heading and buttons */
+    width: 80%;
+    max-width: 1500px;
+    font-weight: bold;
+    letter-spacing: 1px; /* Add letter spacing */
+}
+
+/* Header Text */
+p {
+    font-size: 26px; /* Slightly larger for better emphasis */
+    font-weight: bold;
+    color: #1f4d00;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Styling */
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px; /* Smoother rounded edges */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Softened shadow */
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 420px; /* Slightly wider */
+    border: 2px solid #3c8031; /* Subtle green border for elegance */
+}
+
+/* Buttons */
+button {
+    background-color: #3c8031; /* Primary theme */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px; /* Softer edges */
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #2c5e1a;
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Hide logout button at the top for better layout */
+form[action="/logout"] {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Center the form buttons */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+/* Flash Message Styling */
+.flash-container {
+    position: fixed;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, 0); /* Centers the message */
+    width: auto;
+    max-width: 520px;
+    z-index: 1000;
+    text-align: center;
+}
+
+/* Flash Message Box */
+.flash-message {
+    padding: 15px 40px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
+    animation: fadeOut 4s ease-in-out forwards;
+    opacity: 0.95;
+}
+
+/* Success & Error Message Colors */
+.success {
+    background-color: rgb(177, 231, 160);
+}
+
+.error {
+    background-color: rgb(180, 107, 61);
+}
+
+/* CSS Animation to fade out */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}

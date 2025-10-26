@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Stock</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/viewstock.css') }}">
+        <!-- JavaScript to handle the search functionality and saving changes -->
+    <script>
+        function searchTable() {
+            let input = document.getElementById('searchBar');
+            let filter = input.value.toLowerCase();
+            let table = document.querySelector('table');
+            let rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {  // Skip header row (index 0)
+                let row = rows[i];
+                let cells = row.getElementsByTagName('td');
+                let found = false;
+
+                // Loop through all cells in the row to check if the search term matches any text
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].innerText.toLowerCase().includes(filter)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                // Show or hide the row based on whether a match was found
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+
+        // Function to save the changes (for demonstration purposes)
+        function saveChanges() {
+            const rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    if (cell.isContentEditable) {
+                        console.log(`Changed Cell ${index}: ${cell.innerText}`);
+                        // Here you can send the updated data to the server if necessary
+                    }
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Stock Information</h1>
+<!-- Search Bar -->
+    <input type="text" id="searchBar" onkeyup="searchTable()" placeholder="Search for stock...">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+    <!-- Table displaying the equipment data -->
+    <table>
+        <thead>
+            <tr>
+                <th>Serial No</th>
+                <th>Item</th>
+                <th>Serviceability</th>
+                <th>Total Quantity</th>
+                <th>Availability</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in equipment_data %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td class="editable" contenteditable="true">{{ item[2] }}</td>
+                    <td class="editable" contenteditable="true">{{ item[3] }}</td>
+                    <td class="editable" contenteditable="true">{{ item[4] }}</td>
+                    <td class="editable" contenteditable="true">{{ item[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+<br><br><br>
+    <!-- Link to go back to homepage -->
+    <a href="{{ url_for('equipment') }}" class="back-button">← Back to equipment</a>
+</body>
+</html>

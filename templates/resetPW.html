@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resetPW.css') }}">
+    <script>
+        function toggleResetForm() {
+            var resetForm = document.getElementById('reset-form');
+            resetForm.style.display = (resetForm.style.display === 'none' || resetForm.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<h1>Forgot Password</h1>
+
+<!-- Request Password Reset Form -->
+<form action="{{ url_for('forgot_password') }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <label for="armyNo">Enter Your Army Number:</label>
+    <input type="text" id="armyNo" name="armyNo" required><br><br>
+
+    <button type="submit">Request Password Reset</button>
+</form>
+
+<h3>
+    <button type="button" onclick="toggleResetForm()">Already have a reset code?</button>
+</h3>
+
+<!-- Password Reset Form (Initially Hidden) -->
+<form id="reset-form" action="{{ url_for('forgot_password') }}" method="POST" style="display: none;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <label for="reset-code">Reset Code:</label>
+    <input type="text" id="reset-code" name="reset_code" required><br><br>
+
+    <label for="new-password">New Password:</label>
+    <input type="password" id="new-password" name="new_password" required minlength="10"
+           pattern="^(?=.*[a-z])(?=.*[A-Z]).{10,}$"
+           title="Password must be at least 10 characters long, and include both upper and lowercase letters.">
+    <br><br>
+
+    <label for="confirm-password">Confirm New Password:</label>
+    <input type="password" id="confirm-password" name="confirm_password" required><br><br>
+
+    <button type="submit">Reset Password</button>
+</form>
+
+<!-- Back to Login -->
+<a href="{{ url_for('login') }}" class="back-button">← Back to Login</a>
+
+</body>
+</html>

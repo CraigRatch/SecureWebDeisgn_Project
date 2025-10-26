@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ass.css') }}">
+     <script>
+        function toggleContent(id) {
+            let section = document.getElementById(id);
+            section.style.display = (section.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</head>
+<body>
+    <!-- Flash Message Handling -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Heading -->
+    <h1>Defence Forces Tasks and Assignments</h1>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <!-- View Task List Button -->
+        <button onclick="window.location.href='{{ url_for('view_tasks') }}'">View Task List</button>
+
+        <!-- Create Task Button (only visible for Officers) -->
+        {% if session['role'] == 'Officer' %}
+            <button onclick="toggleContent('createTask')">Create Task</button>
+        {% endif %}
+    </div>
+
+    <!-- Create Task Section -->
+    <div id="createTask" class="content-section" style="display: none;">
+        <h2>Create a Task</h2>
+        <form action="{{ url_for('create_task') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!-- CSRF protection -->
+
+            <label for="task">Task Number:</label>
+            <input type="text" id="task" name="tasknum" placeholder="Enter task number" required>
+
+            <label for="description">Task Description:</label>
+            <input type="text" id="description" name="description" placeholder="Enter task description" required>
+
+            <label for="equipment">Equipment:</label>
+            <input type="text" id="equipment" name="equipment" placeholder="Enter required equipment">
+
+            <label for="bodys">Number of Personnel:</label>
+            <input type="number" id="bodys" name="bodys" placeholder="Enter number of people" required>
+
+            <label for="creater">Created By:</label>
+            <input type="text" id="creater" name="creater" placeholder="Enter your name" required>
+
+            <button type="submit">Create</button>
+        </form>
+    </div>
+
+    <a href="{{ url_for('homepage') }}" class="back-button">← Back to homepage</a>
+</body>
+</html>

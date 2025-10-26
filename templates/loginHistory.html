@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Log</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/viewusersCSS.css') }}">
+</head>
+<body>
+    <h1>User Access Log</h1>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+    {% if history %}
+    <p>History Found</p>
+    <table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Army Number</th>
+            <th>Role</th>
+            <th>Login Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in history %}
+        <tr>
+            <td>{{ record.id }}</td>
+            <td>{{ record.armyNo }}</td>
+            <td>{{ record.role }}</td>
+            <td>{{ record.login_time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    <p>No history records found.</p>
+{% endif %}
+
+    <a href="{{ url_for('homepage') }}" class="back-link">← Back to homepage</a>
+</body>
+</html>

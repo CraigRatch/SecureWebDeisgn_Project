@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Order</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/order.css') }}">
+</head>
+<body>
+    <h1>Defence Forces Equipment - Your Order</h1><br>
+    <p><strong>User:</strong> {{ session['armyNo'] }} <strong>Role:</strong> {{ session['role'] }}</p>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if order %}
+        <h2>Order Details</h2>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Stock Name</th>
+                    <th>Quantity</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order %}
+                <tr>
+                    <td>{{ item.sn }}</td>
+                    <td>{{ item.stockName }}</td>
+                    <td>{{ item.stockQuantity }}</td>
+                    <td>{{ item.reason }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No items in your order yet.</p>
+    {% endif %}
+
+    <!-- Form to confirm order placement -->
+    <form action="/orderAction" method="post" style="margin-top: 20px;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><!--CSRF protection -->
+        <input type="hidden" name="armyNo" value="{{ armyNo }}">
+        <button type="submit" name="action" value="place_order">Place Order</button>
+    </form>
+
+    <!-- Link to go back -->
+   <a href="{{ url_for('equipment') }}" class="back-button">← equipment</a>
+</body>
+</html>
